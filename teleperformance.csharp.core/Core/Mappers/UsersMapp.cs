@@ -11,6 +11,7 @@ namespace TCore.Mappers
             ToTable("USERS");
             Map(x => x.Id).ToColumn("Id").IsKey();
             Map(x => x.Name).ToColumn("Name");
+            Map(x => x.UserName).ToColumn("UserName");
             Map(x => x.PhoneNumber).ToColumn("PhoneNumber");
         }
     }

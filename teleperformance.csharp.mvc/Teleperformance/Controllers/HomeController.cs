@@ -43,7 +43,7 @@ namespace Teleperformance.Controllers
 
             UserRepository userRepository = new UserRepository();
             passwordRequest = SecurityHelper.MD5(passwordRequest, true);
-            Users user = userRepository.GetList(w => w.Name == userRequest && w.Password == passwordRequest).FirstOrDefault();
+            Users user = userRepository.GetList(w => w.UserName == userRequest && w.Password == passwordRequest).FirstOrDefault();
 
             if (user != null)
             {

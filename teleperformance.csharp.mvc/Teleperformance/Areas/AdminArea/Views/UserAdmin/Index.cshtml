@@ -13,13 +13,12 @@
         var _datatableUsers;
         var _userIdToEdit = 0;
 
-        jQuery(document).ready(function ()
-        {
+        jQuery(document).ready(function () {
             createDatatable();
+            $('#frmUser').validate();
         });
 
-        function createDatatable()
-        {
+        function createDatatable() {
             _datatableUsers = $('#table_id').DataTable({
                 processing: true,
                 serverSide: true,
@@ -31,6 +30,7 @@
 
                     { data: 'Id' },
                     { data: 'Name' },
+                    { data: 'UserName' },
                     { data: 'PhoneNumber' },
                     {
                         data: null,
@@ -54,22 +54,19 @@
             });
         }
 
-        function dataTableRefresh()
-        {
+        function dataTableRefresh() {
             _datatableUsers.clear().destroy();
             createDatatable();
             $('button.close').click();
         }
 
-        function userAdd()
-        {
+        function userAdd() {
             _userModalAction = 'ADD';
             userAddUpdate();
             $('#mdlUsers').modal('show');
         }
 
-        function deleteUser(userId, userName)
-        {
+        function deleteUser(userId, userName) {
             if (!confirm('Exluir o usuário "' + userName + '"?'))
                 return;
 
@@ -80,85 +77,77 @@
                     {
                         Id: userId
                     },
-                    success: function (result)
-                    {
-                        if (result)
-                        {
+                    success: function (result) {
+                        if (result) {
                             alert("Sucesso!");
                             dataTableRefresh();
                         }
-                        else
-                        {
+                        else {
                             alert("Ocorreu um erro.")
                         }
                     }
                 });
         }
 
-        function userEdit(userId)
-        {
+        function userEdit(userId) {
             _userIdToEdit = userId;
             _userModalAction = 'EDIT';
             $('#frmUser')[0].reset();
             $.ajax(
-            {
-                url: '/AdminArea/UserAdmin/GetUserById',
-                data:
                 {
-                    Id: userId
-                },
-                success: function (result)
-                {
-                    $('#txtUser').val(result.Name);
-                    $('#txtPassword').val('');
-                    $('#txtPhone').val(result.PhoneNumber);
-                    $('#mdlUsers').modal('show');
-                }
-            });
+                    url: '/AdminArea/UserAdmin/GetUserById',
+                    data:
+                    {
+                        Id: userId
+                    },
+                    success: function (result) {
+                        $('#txtName').val(result.Name);
+                        $('#txtUser').val(result.UserName);
+                        $('#txtPassword').val('');
+                        $('#txtPhone').val(result.PhoneNumber);
+                        $('#mdlUsers').modal('show');
+                    }
+                });
         }
 
-        function addUpdate(userId)
-        {
+        function addUpdate(userId) {
             var dataToAddUpdate =
             {
-                userName : $('#txtUser').val(),
-                userPassword : $('#txtPassword').val(),
-                userPhone : $('#txtPhone').val()
+                userName: $('#txtName').val(),
+                loginUser: $('#txtUser').val(),
+                userPassword: $('#txtPassword').val(),
+                userPhone: $('#txtPhone').val()
             };
 
             var backUrl = '/AdminArea/UserAdmin/Add';
-            if (_userModalAction == 'EDIT')
-            {
+            if (_userModalAction == 'EDIT') {
                 backUrl = '/AdminArea/UserAdmin/Update';
                 dataToAddUpdate.Id = _userIdToEdit;
             }
 
             $.ajax({
-                    url: backUrl,
-                    data: dataToAddUpdate,
-                    success: function (result)
-                    {
-                        if (_userModalAction == 'EDIT' && result == 'True') {
-                            alert('Atualizado com sucesso!');
-                        }
-                        else if (_userModalAction == 'EDIT' && result == 'False') {
-                            alert('Erro ao atualizar!');
-                        }
-                        else if (_userModalAction == 'ADD' && result.Id != undefined && result.Id > 0) {
-                            alert('Inserido com sucesso!');
-                        }
-                        else
-                        {
-                            alert('Erro ao inserir!');
-                        }
-
-                        dataTableRefresh();
+                url: backUrl,
+                data: dataToAddUpdate,
+                success: function (result) {
+                    if (_userModalAction == 'EDIT' && result == 'True') {
+                        alert('Atualizado com sucesso!');
                     }
-                });
+                    else if (_userModalAction == 'EDIT' && result == 'False') {
+                        alert('Erro ao atualizar!');
+                    }
+                    else if (_userModalAction == 'ADD' && result.Id != undefined && result.Id > 0) {
+                        alert('Inserido com sucesso!');
+                    }
+                    else {
+                        alert('Erro ao inserir!');
+                    }
+
+                    dataTableRefresh();
+                }
+            });
         }
 
-        function userAddUpdate()
-        {
+        function userAddUpdate() {
             $('#frmUser')[0].reset();
         }
     </script>
@@ -166,13 +155,14 @@
 
 <h2>UserAdmin</h2>
 
-<input type="button" class="btn btn-primary"  value="Adicionar" onclick="userAdd()"/>
+<input type="button" class="btn btn-primary" value="Adicionar" onclick="userAdd()" />
 
 <table id="table_id" class="display" style="width:100%">
     <thead>
         <tr>
             <th>Id</th>
             <th>Nome</th>
+            <th>Usuário</th>
             <th>Telefone</th>
             <th>Editar</th>
             <th>Apagar</th>
@@ -193,28 +183,35 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            
+
             <div class="modal-body">
                 <form id="frmUser" action="" onsubmit="return false;">
+                    <div class="col-xs-12 form-group" style="float: none;">
+                        <label for="txtName">
+                            Nome:
+                        </label>
+                        <input id="txtName" class="form-control" placeholder="Usuário" style="max-width: 100%;" required="required" />
+                    </div>
+
                     <div class="col-xs-12 form-group" style="float: none;">
                         <label for="txtUser">
                             Usuário:
                         </label>
-                        <input id="txtUser" class="form-control" placeholder="Usuário" style="max-width: 100%;" />
+                        <input id="txtUser" class="form-control" placeholder="Usuário" style="max-width: 100%;" required="required" />
                     </div>
 
                     <div class="col-xs-12 form-group" style="float: none;">
                         <label for="txtPassword">
                             Password:
                         </label>
-                        <input id="txtPassword" class="form-control" placeholder="Senha" style="max-width: 100%;" />
+                        <input id="txtPassword" class="form-control" placeholder="Senha" style="max-width: 100%;" required="required" />
                     </div>
 
                     <div class="col-xs-12 form-group" style="float: none;">
                         <label for="txtPhone">
                             Telefone:
                         </label>
-                        <input id="txtPhone" class="form-control" placeholder="Telefone" style="max-width: 100%;" />
+                        <input id="txtPhone" class="form-control" placeholder="Telefone" style="max-width: 100%;" required="required" />
                     </div>
                 </form>
 

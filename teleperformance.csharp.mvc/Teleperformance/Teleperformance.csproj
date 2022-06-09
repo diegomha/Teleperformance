@@ -126,7 +126,7 @@
     <Compile Include="Areas\AdminArea\AdminAreaAreaRegistration.cs" />
     <Compile Include="Areas\AdminArea\Controllers\UserAdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="CustomActionAttubutes\RedirectingActionAttribute.cs" />
+    <Compile Include="CustomActionAttubutes\UserValidateAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

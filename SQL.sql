@@ -9,6 +9,7 @@ CREATE TABLE Users
 (
 	Id INT IDENTITY,
 	Name VARCHAR(200) NOT NULL,
+	UserName VARCHAR(20) NOT NULL,
 	Password VARCHAR(32) NOT NULL,
 	PhoneNumber VARCHAR(20),
 	CONSTRAINT USERS_ID_PK PRIMARY KEY (ID)
@@ -21,3 +22,6 @@ CREATE TABLE Hobbies_Users
 	CONSTRAINT FK_USER_ID FOREIGN KEY (UserId) REFERENCES Users(Id),
 	CONSTRAINT FK_HOBBIES_ID FOREIGN KEY (HobbieId) REFERENCES Hobbies(Id)
 );
+
+INSERT INTO Users (Name, UserName, Password, PhoneNumber)
+VALUES ('Teleperformance', 'teleperformance', CONVERT(VARCHAR(32), HashBytes('MD5', 'Ta*:uKd--douU3*GR_rOU?at-H:vPYIJqwerty987654*'), 2), '+5511947303699');

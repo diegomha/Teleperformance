@@ -32,6 +32,12 @@ namespace Teleperformance.Areas.AdminArea
                 "AdminArea/{controller}/{action}/Id",
                 new { controller = "UserAdmin", action = "GetUserById" }
             );
+
+            context.MapRoute(
+                "AdminArea_Logoff",
+                "AdminArea/{controller}/{action}",
+                new { controller = "UserAdmin", action = "Logoff" }
+            );
         }
     }
 }

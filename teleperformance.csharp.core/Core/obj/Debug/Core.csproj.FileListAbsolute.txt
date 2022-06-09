@@ -15,3 +15,20 @@ C:\Users\diego\Desktop\Teleperformance\teleperformance.csharp.core\Core\bin\Debu
 C:\Users\diego\Desktop\Teleperformance\teleperformance.csharp.core\Core\obj\Debug\Core.csproj.CopyComplete
 C:\Users\diego\Desktop\Teleperformance\teleperformance.csharp.core\Core\obj\Debug\Core.dll
 C:\Users\diego\Desktop\Teleperformance\teleperformance.csharp.core\Core\obj\Debug\Core.pdb
+C:\Users\diego\Desktop\Nova pasta\Teleperformance\teleperformance.csharp.core\Core\bin\Debug\Core.dll.config
+C:\Users\diego\Desktop\Nova pasta\Teleperformance\teleperformance.csharp.core\Core\bin\Debug\Core.dll
+C:\Users\diego\Desktop\Nova pasta\Teleperformance\teleperformance.csharp.core\Core\bin\Debug\Core.pdb
+C:\Users\diego\Desktop\Nova pasta\Teleperformance\teleperformance.csharp.core\Core\bin\Debug\Dapper.dll
+C:\Users\diego\Desktop\Nova pasta\Teleperformance\teleperformance.csharp.core\Core\bin\Debug\Dapper.FluentMap.dll
+C:\Users\diego\Desktop\Nova pasta\Teleperformance\teleperformance.csharp.core\Core\bin\Debug\Dapper.FluentMap.Dommel.dll
+C:\Users\diego\Desktop\Nova pasta\Teleperformance\teleperformance.csharp.core\Core\bin\Debug\Dommel.dll
+C:\Users\diego\Desktop\Nova pasta\Teleperformance\teleperformance.csharp.core\Core\bin\Debug\System.ComponentModel.Annotations.dll
+C:\Users\diego\Desktop\Nova pasta\Teleperformance\teleperformance.csharp.core\Core\bin\Debug\Dapper.xml
+C:\Users\diego\Desktop\Nova pasta\Teleperformance\teleperformance.csharp.core\Core\bin\Debug\Dapper.FluentMap.xml
+C:\Users\diego\Desktop\Nova pasta\Teleperformance\teleperformance.csharp.core\Core\bin\Debug\Dapper.FluentMap.Dommel.xml
+C:\Users\diego\Desktop\Nova pasta\Teleperformance\teleperformance.csharp.core\Core\bin\Debug\Dommel.xml
+C:\Users\diego\Desktop\Nova pasta\Teleperformance\teleperformance.csharp.core\Core\obj\Debug\Core.csprojAssemblyReference.cache
+C:\Users\diego\Desktop\Nova pasta\Teleperformance\teleperformance.csharp.core\Core\obj\Debug\Core.csproj.CoreCompileInputs.cache
+C:\Users\diego\Desktop\Nova pasta\Teleperformance\teleperformance.csharp.core\Core\obj\Debug\Core.csproj.CopyComplete
+C:\Users\diego\Desktop\Nova pasta\Teleperformance\teleperformance.csharp.core\Core\obj\Debug\Core.dll
+C:\Users\diego\Desktop\Nova pasta\Teleperformance\teleperformance.csharp.core\Core\obj\Debug\Core.pdb

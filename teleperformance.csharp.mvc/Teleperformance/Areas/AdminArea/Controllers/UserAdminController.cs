@@ -36,17 +36,25 @@ namespace Teleperformance.Areas.AdminArea.Controllers
             return Json(dicResult, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public ActionResult Logoff()
+        {
+            System.Web.HttpContext.Current.Session["UserLogged"] = null;
+            return RedirectToAction("Index", "Home", new { area = "" });
+        }
+
         public JsonResult GetUserById(int Id)
         {
             Users user = _userRepository.GetById(Id);
             return Json(user, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult Add(string userName, string userPassword, string userPhone)
+        public JsonResult Add(string userName, string loginUser, string userPassword, string userPhone)
         {
             Users usr = new Users()
             {
                 Name = userName.Trim(),
+                UserName = loginUser.Trim(),
                 Password = SecurityHelper.MD5(userPassword.Trim(), true),
                 PhoneNumber = userPhone.Trim()
             };
@@ -60,10 +68,11 @@ namespace Teleperformance.Areas.AdminArea.Controllers
             return Json(usr, JsonRequestBehavior.AllowGet);
         }
 
-        public string Update(int Id, string userName, string userPassword, string userPhone)
+        public string Update(int Id, string userName, string loginUser, string userPassword, string userPhone)
         {
             Users usr = _userRepository.GetById(Id);
             usr.Name = userName.Trim();
+            usr.UserName = loginUser.Trim();
             usr.Password = SecurityHelper.MD5(userPassword.Trim(), true);
             usr.PhoneNumber = userPhone.Trim();
 
