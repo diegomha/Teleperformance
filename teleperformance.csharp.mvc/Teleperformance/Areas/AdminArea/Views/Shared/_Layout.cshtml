@@ -1,5 +1,10 @@
 ﻿@{
-    string userName = ((Core.Entities.Users)Session["UserLogged"]).Name;
+    string userName = "";
+
+    if (System.Web.HttpContext.Current.Session["UserLogged"] != null)
+    {
+        userName = ((Core.Entities.Users)System.Web.HttpContext.Current.Session["UserLogged"]).Name;
+    }
 }
 
 <!DOCTYPE html>

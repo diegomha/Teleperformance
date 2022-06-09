@@ -6,22 +6,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Teleperformance.CustomActionAttubutes;
 using Teleperformance.Helpers;
 
 namespace Teleperformance.Areas.AdminArea.Controllers
 {
+    [RedirectingActionAttribute]
     public class UserAdminController : Controller
     {
         UserRepository _userRepository = new UserRepository();
-
-        public UserAdminController()
-        {
-            if (System.Web.HttpContext.Current.Session["UserLogged"] == null)
-            {
-                TempData["Msg"] = "Usuário ou senha inválidos";
-                Response.Redirect("/");
-            }
-        }
 
         // GET: AdminArea/UserAdmin
         public ActionResult Index()
