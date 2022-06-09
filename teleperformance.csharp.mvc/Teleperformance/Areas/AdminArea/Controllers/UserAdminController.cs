@@ -11,7 +11,7 @@ using Teleperformance.Helpers;
 
 namespace Teleperformance.Areas.AdminArea.Controllers
 {
-    [RedirectingActionAttribute]
+    [UserValidateAttribute]
     public class UserAdminController : Controller
     {
         UserRepository _userRepository = new UserRepository();

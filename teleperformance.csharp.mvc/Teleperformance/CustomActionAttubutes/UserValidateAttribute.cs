@@ -7,7 +7,7 @@ using System.Web.Routing;
 
 namespace Teleperformance.CustomActionAttubutes
 {
-    public class RedirectingActionAttribute : ActionFilterAttribute
+    public class UserValidateAttribute : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
