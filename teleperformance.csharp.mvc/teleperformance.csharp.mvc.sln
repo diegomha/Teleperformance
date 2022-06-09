@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31112.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teleperformance", "Teleperformance\Teleperformance.csproj", "{09509C9E-351E-4D56-8243-30C9A7587070}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "..\teleperformance.csharp.core\Core\Core.csproj", "{15225222-69D3-4A87-93F1-49DCFC289DD6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{09509C9E-351E-4D56-8243-30C9A7587070}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09509C9E-351E-4D56-8243-30C9A7587070}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09509C9E-351E-4D56-8243-30C9A7587070}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09509C9E-351E-4D56-8243-30C9A7587070}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15225222-69D3-4A87-93F1-49DCFC289DD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15225222-69D3-4A87-93F1-49DCFC289DD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15225222-69D3-4A87-93F1-49DCFC289DD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15225222-69D3-4A87-93F1-49DCFC289DD6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BA6482B3-F0F5-4F58-BBDC-BDB0F5F86B0A}
+	EndGlobalSection
+EndGlobal

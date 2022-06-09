@@ -1,0 +1,53 @@
+﻿.front-margin-10px
+{
+    margin: 10px !important;
+}
+
+.padding-top
+{
+    padding-top: 10px;
+}
+
+.padding-bottom
+{
+    padding-bottom: 10px;
+}
+
+.front-group-header
+{
+    background-color: transparent !important;
+    font-weight: bold;
+    font-size: 17px;
+}
+
+.border
+{
+    border: solid 1px #ccc !important;
+}
+
+.bottom-line 
+{
+    border-bottom: dashed 1px #5cb85c;
+}
+
+.margin-top
+{
+    margin-top: 30px;
+}
+
+.menu-title
+{
+    text-align: center !important;
+    border-top: solid 1px #ccc;
+    border-bottom: solid 1px #ccc;
+    margin-left: auto; 
+    margin-right: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: #F8F8F8;
+}
+
+a.link
+{
+    color: #5cb85c;
+}

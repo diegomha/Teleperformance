@@ -1,0 +1,229 @@
+﻿
+@{
+    ViewBag.Title = "UserAdmin";
+}
+
+<link href="~/Content/DataTables/css/jquery.dataTables.min.css" rel="stylesheet" />
+
+@section  scripts{
+    <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
+    
+    <script type="text/javascript">
+        var _userModalAction = undefined;
+        var _datatableUsers;
+        var _userIdToEdit = 0;
+
+        jQuery(document).ready(function ()
+        {
+            createDatatable();
+        });
+
+        function createDatatable()
+        {
+            _datatableUsers = $('#table_id').DataTable({
+                processing: true,
+                serverSide: true,
+                paging: false,
+                ajax: {
+                    url: '/AdminArea/UserAdmin/GetUsers'
+                },
+                columns: [
+
+                    { data: 'Id' },
+                    { data: 'Name' },
+                    { data: 'PhoneNumber' },
+                    {
+                        data: null,
+                        className: "dt-center editor-edit",
+                        defaultContent: '<i class="fa fa-pencil" style="cursor: pointer;"/>',
+                        orderable: false,
+                        render: function (data, type, row) {
+                            return '<i class="fa fa-pencil" style="cursor: pointer;" onclick=userEdit(' + data.Id + ') />'
+                        }
+                    },
+                    {
+                        data: null,
+                        className: "dt-center editor-edit",
+                        defaultContent: '<i class="fa fa-trash" style="cursor: pointer;"/>',
+                        orderable: false,
+                        render: function (data, type, row) {
+                            return '<i class="fa fa-trash" style="cursor: pointer;" onclick=deleteUser(' + data.Id + ',"' + data.Name + '") />'
+                        }
+                    }
+                ],
+            });
+        }
+
+        function dataTableRefresh()
+        {
+            _datatableUsers.clear().destroy();
+            createDatatable();
+            $('button.close').click();
+        }
+
+        function userAdd()
+        {
+            _userModalAction = 'ADD';
+            userAddUpdate();
+            $('#mdlUsers').modal('show');
+        }
+
+        function deleteUser(userId, userName)
+        {
+            if (!confirm('Exluir o usuário "' + userName + '"?'))
+                return;
+
+            $.ajax(
+                {
+                    url: '/AdminArea/UserAdmin/Delete',
+                    data:
+                    {
+                        Id: userId
+                    },
+                    success: function (result)
+                    {
+                        if (result)
+                        {
+                            alert("Sucesso!");
+                            dataTableRefresh();
+                        }
+                        else
+                        {
+                            alert("Ocorreu um erro.")
+                        }
+                    }
+                });
+        }
+
+        function userEdit(userId)
+        {
+            _userIdToEdit = userId;
+            _userModalAction = 'EDIT';
+            $('#frmUser')[0].reset();
+            $.ajax(
+            {
+                url: '/AdminArea/UserAdmin/GetUserById',
+                data:
+                {
+                    Id: userId
+                },
+                success: function (result)
+                {
+                    $('#txtUser').val(result.Name);
+                    $('#txtPassword').val('');
+                    $('#txtPhone').val(result.PhoneNumber);
+                    $('#mdlUsers').modal('show');
+                }
+            });
+        }
+
+        function addUpdate(userId)
+        {
+            var dataToAddUpdate =
+            {
+                userName : $('#txtUser').val(),
+                userPassword : $('#txtPassword').val(),
+                userPhone : $('#txtPhone').val()
+            };
+
+            var backUrl = '/AdminArea/UserAdmin/Add';
+            if (_userModalAction == 'EDIT')
+            {
+                backUrl = '/AdminArea/UserAdmin/Update';
+                dataToAddUpdate.Id = _userIdToEdit;
+            }
+
+            $.ajax({
+                    url: backUrl,
+                    data: dataToAddUpdate,
+                    success: function (result)
+                    {
+                        if (_userModalAction == 'EDIT' && result == 'True') {
+                            alert('Atualizado com sucesso!');
+                        }
+                        else if (_userModalAction == 'EDIT' && result == 'False') {
+                            alert('Erro ao atualizar!');
+                        }
+                        else if (_userModalAction == 'ADD' && result.Id != undefined && result.Id > 0) {
+                            alert('Inserido com sucesso!');
+                        }
+                        else
+                        {
+                            alert('Erro ao inserir!');
+                        }
+
+                        dataTableRefresh();
+                    }
+                });
+        }
+
+        function userAddUpdate()
+        {
+            $('#frmUser')[0].reset();
+        }
+    </script>
+}
+
+<h2>UserAdmin</h2>
+
+<input type="button" class="btn btn-primary"  value="Adicionar" onclick="userAdd()"/>
+
+<table id="table_id" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nome</th>
+            <th>Telefone</th>
+            <th>Editar</th>
+            <th>Apagar</th>
+        </tr>
+    </thead>
+
+    <tbody></tbody>
+
+</table>
+
+
+<div class="modal fade" id="mdlUsers" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Usuário</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <form id="frmUser" action="" onsubmit="return false;">
+                    <div class="col-xs-12 form-group" style="float: none;">
+                        <label for="txtUser">
+                            Usuário:
+                        </label>
+                        <input id="txtUser" class="form-control" placeholder="Usuário" style="max-width: 100%;" />
+                    </div>
+
+                    <div class="col-xs-12 form-group" style="float: none;">
+                        <label for="txtPassword">
+                            Password:
+                        </label>
+                        <input id="txtPassword" class="form-control" placeholder="Senha" style="max-width: 100%;" />
+                    </div>
+
+                    <div class="col-xs-12 form-group" style="float: none;">
+                        <label for="txtPhone">
+                            Telefone:
+                        </label>
+                        <input id="txtPhone" class="form-control" placeholder="Telefone" style="max-width: 100%;" />
+                    </div>
+                </form>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary" onclick="addUpdate();">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>

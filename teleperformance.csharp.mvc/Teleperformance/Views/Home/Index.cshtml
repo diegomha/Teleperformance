@@ -1,0 +1,78 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="col-xs-12 container-fluid margin-top">
+
+    <div class="col-xs-3 front-margin-10px padding-top border">
+
+        <div class="col-xs-12 bottom-line" style="padding: 0px;">
+            <label class="col-xs-12 row menu-title">Entrar</label>
+
+            <form action="/Home/DoLogging" method="post">
+                @Html.AntiForgeryToken()
+                <div class="col-xs-12 input-group text-center">
+                    <label for="txtUser">
+                        Usuário:
+                    </label>
+                    <input id="txtUser" name="txtUser" class="col-xs-12 form-control" placeholder="Usuário" />
+                </div>
+
+                <div class="col-xs-12 input-group text-center">
+                    <label for="txtPassword" style="margin-top: 10px;">
+                        Senha:
+                    </label>
+                    <input id="txtPassword" name="txtPassword" class="col-xs-12 form-control" placeholder="Password" />
+                </div>
+
+                <div class="col-xs-12 input-group text-center">
+                    <label style="margin-top: 10px; color: red;">
+                        @TempData["Msg"]
+                    </label>
+                </div>
+
+                <div class="col-xs-12 text-center padding-top padding-bottom">
+                    <input type="submit" value="Entrar" class="btn btn-success center" />
+                </div>
+            </form>
+
+            <div class="row col-xs-12">
+                <a href="https://www.google.com" target="_blank" class="link">Área do Aluno</a>
+            </div>
+            <div class="row col-xs-12">
+                <a href="https://www.google.com" target="_blank" class="link">Área do Professor</a>
+            </div>
+            <div class="row col-xs-12">
+                <a href="https://www.google.com" target="_blank" class="link">Acesso às qualificações</a>
+            </div>
+            
+        </div>
+
+        <div class="col-xs-12" style="padding: 0px;">
+            <label class="col-xs-12 row menu-title">Links de interesse</label>
+
+            <div class="row col-xs-12">
+                <ul>
+                    <li><a href="https://www.google.com" target="_blank" class="link">Área do Aluno</a></li>
+                    <li><a href="https://www.google.com" target="_blank" class="link">Área do Professor</a></li>
+                    <li><a href="https://www.google.com" target="_blank" class="link">Acesso às qualificações</a></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    
+    <div class="col-xs-8 front-margin-10px padding-top border" style="border: 1px solid; ">
+        <div class="col-xs-12">
+            <div class="col-xs-12 panel panel-default">
+                <div class="panel-heading front-group-header text-center">Notícias de front-end</div>
+                <div class="panel-body">Notícias mensagem</div>
+            </div>
+
+            <div class="col-xs-12 panel panel-default">
+                <div class="panel-heading front-group-header text-center">Notícias de Backend</div>
+                <div class="panel-body">Notícias mensagem</div>
+            </div>
+        </div>
+    </div>
+</div>
