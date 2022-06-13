@@ -15,6 +15,8 @@ namespace Teleperformance.Areas.AdminArea.Controllers
     public class UserAdminController : Controller
     {
         UserRepository _userRepository = new UserRepository();
+        HobbiesRepository _hobbiesRepository = new HobbiesRepository();
+        HobbiesUsersRepository _hobbiesUsersRepository = new HobbiesUsersRepository();
 
         // GET: AdminArea/UserAdmin
         public ActionResult Index()
@@ -47,6 +49,23 @@ namespace Teleperformance.Areas.AdminArea.Controllers
         {
             Users user = _userRepository.GetById(Id);
             return Json(user, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetHobbieByUserId(int id)
+        {
+            List<int> lstHobbiesUsers = _hobbiesUsersRepository.GetList(a => a.UserId == id).Select(a => a.HobbieId).ToList();
+            List<Hobbies> lstHobbies = new List<Hobbies>();
+
+            if (lstHobbiesUsers.Count() >= 1)
+                lstHobbies = _hobbiesRepository.GetAll().Where(a => lstHobbiesUsers.Contains(a.Id)).ToList();
+
+            Dictionary<string, object> dicResult = new Dictionary<string, object>();
+            dicResult.Add("draw", lstHobbies.Count());
+            dicResult.Add("recordsTotal", lstHobbies.Count());
+            dicResult.Add("recordsFiltered", lstHobbies.Count());
+            dicResult.Add("data", lstHobbies.ToArray());
+
+            return Json(dicResult, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult Add(string userName, string loginUser, string userPassword, string userPhone)

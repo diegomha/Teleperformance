@@ -34,6 +34,12 @@ namespace Teleperformance.Areas.AdminArea
             );
 
             context.MapRoute(
+                "AdminArea_GetHobbiesByUserId",
+                "AdminArea/{controller}/{action}/Id",
+                new { controller = "UserAdmin", action = "GetHobbieByUserId" }
+            ); 
+
+            context.MapRoute(
                 "AdminArea_Logoff",
                 "AdminArea/{controller}/{action}",
                 new { controller = "UserAdmin", action = "Logoff" }

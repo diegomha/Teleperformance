@@ -12,7 +12,7 @@ namespace Core.Mappers
     {
         public HobbiesMapp()
         {
-            ToTable("Hobbies");
+            ToTable("HOBBIES");
             Map(x => x.Id).ToColumn("Id").IsKey();
             Map(x => x.Name).ToColumn("Name");
         }

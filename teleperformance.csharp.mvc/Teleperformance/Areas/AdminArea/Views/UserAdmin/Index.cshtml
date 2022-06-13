@@ -11,12 +11,44 @@
     <script type="text/javascript">
         var _userModalAction = undefined;
         var _datatableUsers;
+        var _datatableHobbies = undefined;
         var _userIdToEdit = 0;
 
         jQuery(document).ready(function () {
             createDatatable();
-            $('#frmUser').validate();
         });
+
+        function createHobbiesTable(userId) {
+
+            if (_datatableHobbies != undefined)
+                _datatableHobbies.destroy();
+
+            _datatableHobbies = $('#tblHobbies').DataTable({
+                processing: true,
+                serverSide: true,
+                paging: false,
+                ajax: {
+                    url: '/AdminArea/UserAdmin/GetHobbieByUserId',
+                    data: {
+                        id: userId
+                    }
+                },
+                columns: [
+
+                    { data: 'Id' },
+                    { data: 'Name' },
+                    {
+                        data: null,
+                        className: "dt-center editor-edit",
+                        defaultContent: '<i class="fa fa-trash" style="cursor: pointer;"/>',
+                        orderable: false,
+                        render: function (data, type, row) {
+                            return '<i class="fa fa-trash" style="cursor: pointer;" onclick=hobbieDelete(' + data.Id + ',"' + data.Name + '") />'
+                        }
+                    }
+                ],
+            });
+        }
 
         function createDatatable() {
             _datatableUsers = $('#table_id').DataTable({
@@ -106,6 +138,8 @@
                         $('#txtPassword').val('');
                         $('#txtPhone').val(result.PhoneNumber);
                         $('#mdlUsers').modal('show');
+
+                        createHobbiesTable(result.Id);
                     }
                 });
         }
@@ -212,6 +246,25 @@
                             Telefone:
                         </label>
                         <input id="txtPhone" class="form-control" placeholder="Telefone" style="max-width: 100%;" required="required" />
+                    </div>
+
+                    <div class="col-xs-12 form-group" style="float: none;">
+                        <label for="txtPhone">
+                            Hobbies:
+                        </label>
+
+                        <table id="tblHobbies" class="display" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nome</th>
+                                    <th>Apagar</th>
+                                </tr>
+                            </thead>
+
+                            <tbody></tbody>
+
+                        </table>
                     </div>
                 </form>
 

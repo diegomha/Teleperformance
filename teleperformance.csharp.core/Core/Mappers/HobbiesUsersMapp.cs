@@ -12,9 +12,9 @@ namespace Core.Mappers
     {
         public HobbiesUsersMapp()
         {
-            ToTable("Hobbies_Users");
-            Map(x => x.UserId).ToColumn("UserId");
-            Map(x => x.HobbieId).ToColumn("HobbieId");
+            ToTable("HobbiesUsers");
+            Map(x => x.UserId).ToColumn("UserId").IsKey();
+            Map(x => x.HobbieId).ToColumn("HobbieId").IsKey();
         }
     }
 }
