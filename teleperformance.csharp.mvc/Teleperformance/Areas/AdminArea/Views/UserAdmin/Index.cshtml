@@ -27,6 +27,7 @@
                 processing: true,
                 serverSide: true,
                 paging: false,
+                searching: false,
                 ajax: {
                     url: '/AdminArea/UserAdmin/GetHobbieByUserId',
                     data: {
@@ -43,7 +44,7 @@
                         defaultContent: '<i class="fa fa-trash" style="cursor: pointer;"/>',
                         orderable: false,
                         render: function (data, type, row) {
-                            return '<i class="fa fa-trash" style="cursor: pointer;" onclick=hobbieDelete(' + data.Id + ',"' + data.Name + '") />'
+                            return '<i class="fa fa-trash" style="cursor: pointer;" onclick="hobbieDelete(' + data.Id + ',' + userId + ')" />'
                         }
                     }
                 ],
@@ -86,10 +87,15 @@
             });
         }
 
-        function dataTableRefresh() {
+        function userDataTableRefresh() {
             _datatableUsers.clear().destroy();
             createDatatable();
             $('button.close').click();
+        }
+
+        function userHobbiesDataTableRefresh(userId)
+        {
+            createHobbiesTable(userId);
         }
 
         function userAdd() {
@@ -112,7 +118,7 @@
                     success: function (result) {
                         if (result) {
                             alert("Sucesso!");
-                            dataTableRefresh();
+                            userDataTableRefresh();
                         }
                         else {
                             alert("Ocorreu um erro.")
@@ -125,6 +131,11 @@
             _userIdToEdit = userId;
             _userModalAction = 'EDIT';
             $('#frmUser')[0].reset();
+            $('#btnAddHobbie').attr('onclick', 'addHobbie(' + userId + ')');
+            $('#divHobbies').show();
+
+            GetAllHobbies(userId);
+
             $.ajax(
                 {
                     url: '/AdminArea/UserAdmin/GetUserById',
@@ -139,7 +150,7 @@
                         $('#txtPhone').val(result.PhoneNumber);
                         $('#mdlUsers').modal('show');
 
-                        createHobbiesTable(result.Id);
+                        userHobbiesDataTableRefresh(userId);
                     }
                 });
         }
@@ -154,7 +165,9 @@
             };
 
             var backUrl = '/AdminArea/UserAdmin/Add';
-            if (_userModalAction == 'EDIT') {
+
+            if (_userModalAction == 'EDIT')
+            {
                 backUrl = '/AdminArea/UserAdmin/Update';
                 dataToAddUpdate.Id = _userIdToEdit;
             }
@@ -176,12 +189,66 @@
                         alert('Erro ao inserir!');
                     }
 
-                    dataTableRefresh();
+                    userDataTableRefresh();
+                }
+            });
+        }
+
+        function addHobbie(userId)
+        {
+            $.ajax({
+                url: '/AdminArea/UserAdmin/AddHobbie',
+                data:
+                {
+                    userId: userId,
+                    hobbieId: $('#slcHobbie option:selected').val()
+                },
+                success: function (result)
+                {
+                    GetAllHobbies(userId);
+                    userHobbiesDataTableRefresh(userId);
+                }
+            });
+        }
+
+        function GetAllHobbies(userId)
+        {
+            $('#slcHobbie option').remove();
+            $.ajax({
+                url: '/AdminArea/UserAdmin/GetHobbieList',
+                data:
+                {
+                    userId: userId
+                },
+                success: function (result)
+                {
+                    $.each(result, function (key, value)
+                    {
+                        $('#slcHobbie').append('<option value="' + value.Id + '">' + value.Name + '</option>');
+                    });
+                }
+            });
+        }
+
+        function hobbieDelete(userHobbieId, userId)
+        {
+            $.ajax({
+                url: '/AdminArea/UserAdmin/UserHobbieDelete',
+                data:
+                {
+                    userId: userId,
+                    hobbieId: userHobbieId
+                },
+                success: function (result)
+                {
+                    GetAllHobbies(userId);
+                    userHobbiesDataTableRefresh(userId);
                 }
             });
         }
 
         function userAddUpdate() {
+            $('#divHobbies').hide(); 
             $('#frmUser')[0].reset();
         }
     </script>
@@ -238,7 +305,7 @@
                         <label for="txtPassword">
                             Password:
                         </label>
-                        <input id="txtPassword" class="form-control" placeholder="Senha" style="max-width: 100%;" required="required" />
+                        <input id="txtPassword" type="password" class="form-control" placeholder="Senha" style="max-width: 100%;" required="required" />
                     </div>
 
                     <div class="col-xs-12 form-group" style="float: none;">
@@ -249,22 +316,36 @@
                     </div>
 
                     <div class="col-xs-12 form-group" style="float: none;">
-                        <label for="txtPhone">
-                            Hobbies:
-                        </label>
 
-                        <table id="tblHobbies" class="display" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Nome</th>
-                                    <th>Apagar</th>
-                                </tr>
-                            </thead>
+                        <div id="divHobbies">
+                            <label>
+                                Hobbies:
+                            </label>
 
-                            <tbody></tbody>
+                            <div class="col-xs-12">
+                                <div class="col-xs-6">
+                                    <select id="slcHobbie" class="form-control">
+                                    </select>
+                                </div>
 
-                        </table>
+                                <div class="col-xs-6">
+                                    <input id="btnAddHobbie" type="button" class="btn btn-success" value="Adicionar" onclick="" />
+                                </div>
+                            </div>
+
+                            <table id="tblHobbies" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Nome</th>
+                                        <th>Apagar</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody></tbody>
+
+                            </table>
+                        </div>
                     </div>
                 </form>
 

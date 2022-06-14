@@ -68,6 +68,43 @@ namespace Teleperformance.Areas.AdminArea.Controllers
             return Json(dicResult, JsonRequestBehavior.AllowGet);
         }
 
+        public string UserHobbieDelete(int hobbieId, int userId)
+        {
+            string result = "False";
+            try
+            {
+                var hobbieUser = _hobbiesUsersRepository.GetList(a => a.UserId == userId && a.HobbieId == hobbieId).Select(a => a.Id).FirstOrDefault();
+                result = _hobbiesUsersRepository.Delete(hobbieUser).ToString().ToLower();
+            }
+            catch { }
+
+            return result;
+        }
+
+        public JsonResult AddHobbie(int userId, int hobbieId)
+        {
+            HobbiesUsers hobbiesUsers = new HobbiesUsers()
+            {
+                HobbieId = hobbieId,
+                UserId = userId
+            };
+
+            try
+            {
+                _hobbiesUsersRepository.Insert(ref hobbiesUsers);
+            }
+            catch { }
+
+            return Json(hobbiesUsers, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetHobbieList(int userId)
+        {
+            var hobbiesUserListId = _hobbiesUsersRepository.GetList(a => a.UserId == userId).Select(a => a.HobbieId).ToList();
+            var lstHobbies = _hobbiesRepository.GetAll().Where(a => !hobbiesUserListId.Contains(a.Id)).ToList();
+            return Json(lstHobbies, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult Add(string userName, string loginUser, string userPassword, string userPhone)
         {
             Users usr = new Users()
@@ -106,6 +143,12 @@ namespace Teleperformance.Areas.AdminArea.Controllers
 
         public bool Delete(int Id)
         {
+            var hobbiesUserList = _hobbiesUsersRepository.GetList(a => a.UserId == Id).ToList();
+            foreach(var item in hobbiesUserList)
+            {
+                _hobbiesUsersRepository.Delete(item.Id);
+            }
+
             return _userRepository.Delete(Id);
         }
     }

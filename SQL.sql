@@ -31,3 +31,5 @@ CREATE TABLE HobbiesUsers
 
 INSERT INTO USERS (Name, UserName, Password, PhoneNumber)
 VALUES ('Teleperformance', 'teleperformance', CONVERT(VARCHAR(32), HashBytes('MD5', 'Ta*:uKd--douU3*GR_rOU?at-H:vPYIJqwerty987654*'), 2), '+5511947303699');
+
+INSERT INTO HOBBIES(NAME) VALUES ('Pintura'), ('Aulas de teatro'), ('Corrida'), ('Academia'), ('Yoga'), ('Dança');

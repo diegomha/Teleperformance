@@ -37,6 +37,24 @@ namespace Teleperformance.Areas.AdminArea
                 "AdminArea_GetHobbiesByUserId",
                 "AdminArea/{controller}/{action}/Id",
                 new { controller = "UserAdmin", action = "GetHobbieByUserId" }
+            );
+
+            context.MapRoute(
+                "AdminArea_GetHobbieList",
+                "AdminArea/{controller}/{action}/Id",
+                new { controller = "UserAdmin", action = "GetHobbieList" }
+            );
+
+            context.MapRoute(
+                "AdminArea_AddHobbie",
+                "AdminArea/{controller}/{action}/Id",
+                new { controller = "UserAdmin", action = "AddHobbie" }
+            );
+
+            context.MapRoute(
+                "AdminArea_UserHobbieDelete",
+                "AdminArea/{controller}/{action}/Id",
+                new { controller = "UserAdmin", action = "UserHobbieDelete" }
             ); 
 
             context.MapRoute(
